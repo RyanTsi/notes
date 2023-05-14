@@ -8,14 +8,14 @@ const int INF = 2147483647, mod = 998244353, MAXN = 1e5 + 10;
 template<typename T, typename F, typename L, typename Map, typename Com>
 struct SegmentTree {
     int n;
-    const F f;          // 二元运算
-    const T e  = T();   // 单位元
-    const L e1 = L();   // 懒标记单位元
-    const Map mapping;  // 解懒标记映射
-    const Com c;        // 添加懒标记
-    vector<T> tree; 
+    const F f;                  // 二元运算
+    const T e  = T();           // 单位元
+    const L e1 = L();           // 懒标记单位元
+    const Map mapping;          // 解懒标记
+    const Com composition;      // 添加(合并)懒标记
+    vector<T> tree;
     vector<L> lazy;
-    SegmentTree(int n, F f, Map mapping, Com c) : n(n), tree(4 << __lg(n)), lazy(4 << __lg(n)), f(f), mapping(mapping), c(c) {}
+    SegmentTree(int n, F f, Map mapping, Com c) : n(n), tree(4 << __lg(n)), lazy(4 << __lg(n)), f(f), mapping(mapping), composition(c) {}
     SegmentTree(vector<T> a, F f, Map m, Com c) : SegmentTree(a.size(), f, m, c) {
         function<void(int, int, int)> build = [&](int p, int l, int r) {
             if(r - l == 1) {
@@ -35,8 +35,8 @@ struct SegmentTree {
         tree[p] = mapping(tree[p], lazy[p], l, r);
         if(r - l > 1) {
             int m = l + r >> 1;
-            lazy[p << 1] = c(lazy[p << 1], lazy[p]);
-            lazy[p << 1 | 1] = c(lazy[p << 1 | 1], lazy[p]);
+            lazy[p << 1] = composition(lazy[p << 1], lazy[p]);
+            lazy[p << 1 | 1] = composition(lazy[p << 1 | 1], lazy[p]);
         }
         lazy[p] = e1;
     }
@@ -82,13 +82,13 @@ struct Lazy : node {
     Lazy() : node(), used(false) {}
     Lazy(int v) : node(v), used(true) {}
 };
-auto f = [&](node a, node b) {
+auto f = [](node a, node b) {
     return node(a.v + b.v);
 };
-auto Map = [&](node a, Lazy b, int l, int r) -> node {
+auto Map = [](node a, Lazy b, int l, int r) -> node {
     return node((b.used ? b.v : a.v) * (r - l));
 };
-auto Com = [&](Lazy a, Lazy b) {
+auto Com = [](Lazy a, Lazy b) {
     return (b.used ? b : a) ;
 };
 
