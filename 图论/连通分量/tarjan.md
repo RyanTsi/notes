@@ -16,7 +16,7 @@ stack<int> stk;
 // 缩点需要定义的
 int tag;                                        // 强连通分量个数
 vector<int> tar[MAXN];                          // 每个强连通分量的点集
-int belong[MAXN];                               // 每个点属于哪个强连通分量
+int scc[MAXN];                                  // 每个点属于哪个强连通分量
 int deg[MAXN];                                  // 缩点后新图每个点的出度
 vector<int> che[MAXN];                          // 缩点后的图
 // 初始化数组
@@ -29,7 +29,7 @@ void init() {
         e[i].clear();
         dfn[i] = 0;
         low[i] = 0;
-        belong[i] = 0;
+        scc[i] = 0;
         vis[i] = 0;
     }
     tim = 0;
@@ -59,7 +59,7 @@ void tarjan(int u, int f) {
             stk.pop();
             vis[now] = 0;
             tar[tag].push_back(now);
-            belong[now] = tag;
+            scc[now] = tag;
         } while(now != u);
         tag ++;
     }
@@ -77,7 +77,7 @@ void regra() {
     for(int i = 0; i < n; i ++) {
         int u = i;
         for(auto [v, yes] : e[i]) {
-            int x = belong[u], y = belong[v];
+            int x = scc[u], y = scc[v];
             if(x != y) {
                 che[x].push_back(y);
                 deg[y] ++;
