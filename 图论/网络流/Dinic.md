@@ -1,7 +1,7 @@
 ```cpp
 namespace Dinic {
     using ll = long long;
-    const int MAX_V = 3e4;
+    const int MAX_V = 500;
     const ll INF = 1e12;
     struct Edge {
         int from, to;
