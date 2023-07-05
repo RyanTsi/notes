@@ -1,12 +1,12 @@
 ```cpp
 namespace Dinic {
     using ll = long long;
-    const int MAX_V = 500;
+    const int MAX_V = 3e4;
     const ll INF = 1e12;
     struct Edge {
         int from, to;
         ll  cup, flow;
-        Edge(int u, int v, int c, int f) : from(u), to(v), cup(c), flow(f) {}
+        Edge(int u, int v, ll c, ll f) : from(u), to(v), cup(c), flow(f) {}
     };
     struct Graph {
 
@@ -23,7 +23,7 @@ namespace Dinic {
             }
         };
 
-        void addEdge(int u, int v, int c) {
+        void addEdge(int u, int v, ll c) {
             es.push_back({u, v, c, 0}), es.push_back({v, u, 0, 0});
             m = es.size();
             G[u].push_back(m - 2), G[v].push_back(m - 1);
