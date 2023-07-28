@@ -4,7 +4,7 @@ void floyd() {
     for(int i = 0; i < m; i ++) {
         int v, u, w;
         cin >> v >> u >> w;
-        dis[v][u] = min(dis[v][u])
+        dis[v][u] = min(dis[v][u], w);
     }
     for(int i = 0; i <= n; i ++) {
         dis[i][i] = 0;
