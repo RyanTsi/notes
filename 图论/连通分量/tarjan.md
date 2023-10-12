@@ -35,7 +35,7 @@ void init() {
     tim = 0;
     tag = 0;
 }
-void tarjan(int u, int f) {
+void tarjan(int u) {
     dfn[u] = low[u] = ++ tim;
     vis[u] = 1;
     stk.push(u);
