@@ -594,22 +594,4 @@ namespace Geometry_2D {
         return s > 0 ? out : s < 0 ? in : on;
     }
 }
-using namespace Geometry_2D;
-int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    int n;
-    cin >> n;  Points ps(n);
-    for(auto &p : ps) cin >> p;
-    auto conv = Convexhell(ps);
-    Points resp(4);
-    cout << RectangleArea(conv, resp) << '\n';
-    auto ltl = LTL(resp);
-    for(auto &[x, y] : resp) {
-        if(eq(x, 0)) x = 0;
-        if(eq(y, 0)) y = 0;
-    }
-    CCWwhitO(ltl, resp);
-    for(auto p : resp) cout << p << '\n';
-}
 ```

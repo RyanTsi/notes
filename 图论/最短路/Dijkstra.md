@@ -1,6 +1,6 @@
 ```cpp
 typedef pair<int, int> PII;
-vector<vector<PII>> e;
+vector<vector<PII>> adj;
 vector<int> dis;
 //vector<int> path;
 int n, m;
@@ -18,7 +18,7 @@ void Dij(int n, int s) {
         int tmpdis = u.first, tmpu = u.second;
         if(vis[tmpu]) continue;
         vis[tmpu] = 1;
-        for(auto it : e[tmpu]) {
+        for(auto it : adj[tmpu]) {
             int v = it.first, w = it.second;
             if(dis[v] > dis[tmpu] + w) {
                 dis[v] = dis[tmpu] + w;
